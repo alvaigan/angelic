@@ -17,6 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/administrator', function () {
-    return view('dashboard');
-});
+Route::get('/administrator', 'App\Http\Controllers\DashboardController@index');
