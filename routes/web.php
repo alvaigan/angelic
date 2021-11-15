@@ -18,3 +18,6 @@ Route::get('/', function () {
 });
 
 Route::get('/administrator', 'App\Http\Controllers\DashboardController@index');
+Route::get('/administrator/user', 'App\Http\Controllers\UserController@index');
+Route::get('/administrator/user/detail/{id}', 'App\Http\Controllers\UserController@edit')->name('user.edit');
+Route::get('/administrator/user/delete/{id}', 'App\Http\Controllers\UserController@destroy');
