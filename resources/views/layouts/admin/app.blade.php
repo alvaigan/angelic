@@ -20,7 +20,7 @@
 
     <!-- Custom styles for this page -->
     <link href="{{ asset('assets') }}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    @stack('css')
 </head>
 
 <body id="page-top">
@@ -76,6 +76,8 @@
     </div>
 
     @stack('js-library')
+
+    @stack('js')
 
 </body>
 
