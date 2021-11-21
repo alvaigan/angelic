@@ -8,6 +8,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        if(empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         return view('dashboard');
     }
 }

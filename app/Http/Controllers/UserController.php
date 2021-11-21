@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Stmt\TryCatch;
 use Throwable;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $get_user = User::all();
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
+        $get_user = DB::table('t_user')->orderBy('created_at', 'DESC')->get();
+        
         return view('user.list', ["get_user" => $get_user]);
     }
 
@@ -39,7 +43,9 @@ class UserController extends Controller
             $store = DB::table('t_user')->insert([
                 'username' => $username,
                 'password' => $password,
-                'role' => $role
+                'role' => $role,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
             return redirect()->route('user.list')->with('success', 'Tambah user berhasil!');
@@ -90,6 +96,8 @@ class UserController extends Controller
 
         $data = $body;
         unset($data['id_user']);
+
+        $data['updated_at'] = Carbon::now()->toDateTimeString();
 
         // return dd($data);
 

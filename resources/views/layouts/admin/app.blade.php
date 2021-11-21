@@ -1,3 +1,5 @@
+<!-- ADMIN APP -->
+
 <!DOCTYPE html>
 <html lang="en">
 

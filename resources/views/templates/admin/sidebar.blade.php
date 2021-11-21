@@ -50,7 +50,7 @@
         <div id="collapseWilayah" class="collapse" aria-labelledby="headingWilayah" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Kelola Data Wilayah:</h6>
-                <a class="collapse-item" href="utilities-color.html">Kecamatan</a>
+                <a class="collapse-item" href="{{ route('kec.list') }}">Kecamatan</a>
                 <a class="collapse-item" href="utilities-border.html">Kota / Kabupaten</a>
                 <a class="collapse-item" href="utilities-animation.html">Provinsi</a>
             </div>
