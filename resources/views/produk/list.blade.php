@@ -1,4 +1,4 @@
-<!-- LIST USER -->
+<!-- LIST BARANG -->
 
 @extends('layouts.admin.app')
 
@@ -13,7 +13,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">List User</h1>
+        <h1 class="h3 mb-0 text-gray-800">List Barang</h1>
     </div>
 
     @include('templates.alerts')
@@ -27,7 +27,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <a href="{{route('user.add')}}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah User</a>
+                    <a href="{{route('produk.create')}}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah Barang</a>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -36,13 +36,13 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Username</th>
-                                    <th>Password</th>
-                                    <th>Role</th>
-                                    <th>Action</th>
+                                    <th>Gambar</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kategori</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
-
                         </table>
                     </div>
                 </div>
@@ -65,9 +65,7 @@
 
     $(function() {
         let table = $('#dataTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{route("user.tablelist")}}'
+            ajax: '{{route("produk.tablelist")}}'
         });
 
         // Sweet Alert
@@ -105,7 +103,7 @@
                                 'success'
                             ).then(result => {
                                 if (result.value) {
-                                    table.ajax.reload();
+                                    table.ajax.reload()
                                 }
                             })
                         }
@@ -113,8 +111,6 @@
                 }
             })
         })
-
-        // $.fn.dataTable.ext.errMode = 'throw';
     })
 </script>
 @endpush

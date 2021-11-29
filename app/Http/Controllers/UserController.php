@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User as User;
 use Throwable;
 
 class UserController extends Controller
@@ -21,6 +22,7 @@ class UserController extends Controller
         
         return view('user.list', ["get_user" => $get_user]);
     }
+    
 
     public function add() 
     {
@@ -80,7 +82,6 @@ class UserController extends Controller
 
     public function editProcess(Request $req)
     {
-
         $body = $req->all();
         unset($body['_token']);
         
@@ -111,6 +112,38 @@ class UserController extends Controller
             error_log('Error: '. $err->getMessage());
             return redirect()->back()->with('error', "Edit user error!");
         }
+    }
+
+    public function getForList()
+    {
+       $get_data = User::all();
+       $data = [];
+
+       foreach ($get_data as $key => $item) {
+           $this_data = [];
+           $this_data[] = $key+1;
+        //    $this_data['id'] = $item['id'];
+           $this_data[] = $item['username'];
+            $this_data[] = $item['password'];
+            $this_data[] = $item['role'];
+
+            $this_data[] = "
+                <div class='btn-group mr-2'>
+                    <a href='". route('user.edit', $item["id"]). "' class='btn btn-warning'><i class='fa fa-pen'></i></a>
+                    <a href='" . route('user.destroy', $item["id"]) . "' class='btn btn-danger'><i class='fa fa-trash'></i></a>
+                </div>
+            ";
+
+            array_push($data, $this_data);
+       }
+
+       $result['data'] = $data;
+       $result['src'] = $get_data;
+       $result['recordsTotal'] = count($get_data);
+       $result['recordsFiltered'] = count($get_data);
+
+    //    dd($result);
+       return response()->json($result);
     }
 
     public function destroy(Request $req) {

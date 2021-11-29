@@ -39,31 +39,35 @@
                             </div>
                             <div class="col-lg-7">
                                 <div class="p-5">
-                                    <div style="width: 100px; height: 100px;" class="justify-content-center">
-                                        <img src="" alt="Logo Angelic" />
-                                    </div>
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login Administrator</h1>
-                                    </div>
-                                    <form class="user" action="{{ route('login.process') }}" method="POST">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="username" name="username" class="form-control form-control-user" id="username" placeholder="Enter Username">
+                                    <div class="row">    
+                                        <div style="width: 200px; height: auto; margin: auto;" class="justify-content-center">
+                                            <img src="{{ asset('assets')}}/img/angelic.png" style="width: inherit;" alt="Logo Angelic" />
                                         </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                    </div>
+
+                                    <div style="margin-top: 30px;">
+
+                                        <form class="user" action="{{ route('login.process') }}" method="POST">
+                                            @csrf
+                                            <div class="form-group">
+                                                <input type="username" name="username" class="form-control form-control-user" id="username" placeholder="Enter Username">
                                             </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-                                    </form>
+                                            <div class="form-group">
+                                                <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Password">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                    <label class="custom-control-label" for="customCheck">Remember
+                                                        Me</label>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                                Login As Administrator
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

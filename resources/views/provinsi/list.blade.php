@@ -1,4 +1,4 @@
-<!-- LIST USER -->
+<!-- LIST PROVINSI -->
 
 @extends('layouts.admin.app')
 
@@ -13,7 +13,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">List User</h1>
+        <h1 class="h3 mb-0 text-gray-800">List Kecamatan</h1>
     </div>
 
     @include('templates.alerts')
@@ -43,6 +43,22 @@
                                 </tr>
                             </thead>
 
+                            <tbody>
+                                @foreach ($get_user as $key=>$data)
+                                <tr>
+                                    <td>{{$key+1 }}</td>
+                                    <td>{{$data->username}}</td>
+                                    <td>{{$data->password}}</td>
+                                    <td>{{$data->role}}</td>
+                                    <td>
+                                        <div class="btn-group mr-2">
+                                            <a href="{{url('/administrator/user/detail')}}/{{$data->id}}" class="btn btn-warning"><i class="fa fa-pen"></i></a>
+                                            <a href="{{url('/administrator/user/destroy')}}/{{$data->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -64,11 +80,7 @@
     // });
 
     $(function() {
-        let table = $('#dataTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{route("user.tablelist")}}'
-        });
+        let table = $('#dataTable').DataTable();
 
         // Sweet Alert
         $(document).on('click', '.btn-danger', function(e) {
@@ -105,7 +117,7 @@
                                 'success'
                             ).then(result => {
                                 if (result.value) {
-                                    table.ajax.reload();
+                                    location.reload()
                                 }
                             })
                         }
@@ -113,8 +125,6 @@
                 }
             })
         })
-
-        // $.fn.dataTable.ext.errMode = 'throw';
     })
 </script>
 @endpush
