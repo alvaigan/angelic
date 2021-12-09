@@ -26,6 +26,10 @@ class UserController extends Controller
 
     public function add() 
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+
         $data  = [
             'page' => 'tambah',
             'title' => 'Form Tambah'
@@ -36,6 +40,10 @@ class UserController extends Controller
 
     public function addProcess(Request $req)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         $username = $req->username;
         $password = $req->password;
         $password = Hash::make($password, ['rounds'=>10]);
@@ -59,6 +67,10 @@ class UserController extends Controller
 
     public function edit(Request $req)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+
         $id_to_edit = $req->route('id');
 
         try {
@@ -82,6 +94,10 @@ class UserController extends Controller
 
     public function editProcess(Request $req)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+
         $body = $req->all();
         unset($body['_token']);
         

@@ -14,6 +14,10 @@ class KategoriController extends Controller
      */
     public function index()
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+
         return view('kategori.list');
     }
 
@@ -24,6 +28,10 @@ class KategoriController extends Controller
      */
     public function create()
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         return view('kategori.form');
     }
 
@@ -35,6 +43,10 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         try {
             $kategori = new Kategori;
             $kategori->kategori = $request->input('kategori');
@@ -66,6 +78,10 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         $data = Kategori::where('id', $id)->first();
 
         return view('kategori.form')->with(['data'=> $data]);
@@ -80,6 +96,10 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         try {
             $data = Kategori::where('id', $id)->first();
             $data->kategori = $request->input('kategori');
@@ -99,6 +119,10 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         try {
             Kategori::destroy($id);
         } catch (\Throwable $err) {
@@ -107,7 +131,7 @@ class KategoriController extends Controller
     }   
 
     public function getForTable()
-    {
+    {   
         $get_data = Kategori::all();
         $data = [];
 

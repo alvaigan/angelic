@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainStoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+// Store
+Route::get('/', [MainStoreController::class, 'index'])->name('home');
+Route::get('/home', [MainStoreController::class, 'index'])->name('home');
+Route::get('/catalogue', [MainStoreController::class, 'catalogue'])->name('catalogue');
+Route::get('/detail/{id}', [MainStoreController::class, 'detail'])->name('detail');
 
 // Login
 Route::get('/login', 'App\Http\Controllers\AuthorController@index')->name('login.page');

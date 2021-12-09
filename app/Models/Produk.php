@@ -12,4 +12,12 @@ class Produk extends Model
     protected $primaryKey = 'id';
     // protected $incrementing = true;
     public $timestamps = true;
+
+    public function gambar() {
+        return $this->hasMany(Gambar::class, 'id_produk', 'id');
+    }
+
+    public function kategori() {
+        return $this->belongsTo(Kategori::class, 'id_kategori', 'id');
+    }
 }

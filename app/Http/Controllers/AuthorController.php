@@ -35,7 +35,7 @@ class AuthorController extends Controller
             }
         } catch (Throwable $err) {
             error_log($err->getMessage());
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Username atau Password salah!');
         }
     }
 

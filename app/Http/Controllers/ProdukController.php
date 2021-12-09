@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use App\Models\Gambar;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,10 @@ class ProdukController extends Controller
      */
     public function index()
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         return view('produk.list');
     }
 
@@ -25,6 +30,10 @@ class ProdukController extends Controller
      */
     public function create()
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         $data['kategori'] = Kategori::all();
 
         // dd($data['kategori'][1]);
@@ -39,14 +48,27 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('img');
-        $target_path = 'uploads/'.$request->input('kode_produk');
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+
+        $urls = [];
+
+        foreach ($request->file() as $key => $file) {
+
+            $target_path = 'uploads/'.$request->input('kode_produk');
         try {
             $file->move($target_path, $file->getClientOriginalName());
         } catch (\Throwable $err) {
             return redirect()->back()->with('error', $err->getMessage());
         }
 
+        $this_url = $target_path."/".$file->getClientOriginalName();
+
+        array_push($urls, $this_url);
+
+        }
+    
         $tags = explode(',', $request->input('tags'));
 
         $produk = new Produk;
@@ -59,10 +81,19 @@ class ProdukController extends Controller
         $produk->short_desc = $request->input('short_desc');
         $produk->deskripsi = $request->input('deskripsi');
         $produk->url_shopee = $request->input('url_shopee');
-        $produk->img = $target_path."/". $file->getClientOriginalName();
+        $produk->url_tokped = $request->input('url_tokped');
+
         try {
             $produk->save();
-            
+
+            foreach($urls as $img) {
+                $t_gambar = new Gambar;
+                $t_gambar->id_produk = $produk->id;
+                $t_gambar->url = $img;
+
+                $t_gambar->save();
+            }
+         
             return redirect()->route('produk.index')->with('success', 'Tambah barang berhasil!');
         } catch (\Throwable $err) {
             
@@ -89,7 +120,11 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        $data['data'] = Produk::where('id', $id)->first();
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
+        $data['data'] = Produk::with('gambar')->where('id', $id)->first();
         $data['kategori'] = Kategori::all();
         
         return view('produk.form')->with($data);
@@ -104,16 +139,28 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         if (!empty($request->file())) {
 
-            $file = $request->file('img');
-            $target_path = 'uploads/' . $request->input('kode_produk');
-            try {
-                $file->move($target_path, $file->getClientOriginalName());
-            } catch (\Throwable $err) {
-                return redirect()->back()->with('error', $err->getMessage());
-            }
+            $urls = [];
+
+        foreach ($request->file() as $key => $file) {
+
+            $target_path = 'uploads/'.$request->input('kode_produk');
+        try {
+            $file->move($target_path, $file->getClientOriginalName());
+        } catch (\Throwable $err) {
+            return redirect()->back()->with('error', $err->getMessage());
+        }
+
+        $this_url = $target_path."/".$file->getClientOriginalName();
+
+        array_push($urls, $this_url);
+
+        }
         }
 
         $tags = explode(',', $request->input('tags'));
@@ -128,10 +175,7 @@ class ProdukController extends Controller
         $produk->short_desc = $request->input('short_desc');
         $produk->deskripsi = $request->input('deskripsi');
         $produk->url_shopee = $request->input('url_shopee');
-
-        if (!empty($request->file())){
-            $produk->img = $target_path . "/" . $file->getClientOriginalName();
-        }
+        $produk->url_shopee = $request->input('url_tokped');
 
         // return dd($produk);
         try {
@@ -151,6 +195,10 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+        
         try {
             Produk::destroy($id);
         } catch (\Throwable $err) {
@@ -160,17 +208,28 @@ class ProdukController extends Controller
 
     public function getForTable()
     {
-        $get_data = Produk::all();
+        $get_data = Produk::with('gambar')->get();
         $data = [];
 
+        // dd($get_data[2]);  
+
         foreach ($get_data as $key => $item) {
+
+            // dd($item->gambar);
+            if (!empty($item->gambar[0])) {
+                $img_url = asset('') . $item->gambar[0]->url;
+            } else {
+                $img_url = '';
+            }
+
+            // dd($img_url);
 
             $kategori = Kategori::where('id', $item['id_kategori'])->first();
 
             $this_data = [];
             $this_data[] = $key + 1;
             //    $this_data['id'] = $item['id'];
-            $this_data[] = "<img style='width: 160px' src=". asset('')."".$item['img']." />";
+            $this_data[] = "<img style='width: 160px' src=".$img_url." />";
             $this_data[] = $item['kode_produk'];
             $this_data[] = $item['nama_produk'];
             $this_data[] = $kategori['kategori'];
@@ -189,6 +248,8 @@ class ProdukController extends Controller
         $result['src'] = $get_data;
         $result['recordsTotal'] = count($get_data);
         $result['recordsFiltered'] = count($get_data);
+
+        // dd($result['data'][2]);
 
         return response()->json($result);
     }

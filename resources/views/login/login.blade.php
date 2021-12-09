@@ -45,6 +45,8 @@
                                         </div>
                                     </div>
 
+                                    @include('templates.alerts')
+
                                     <div style="margin-top: 30px;">
 
                                         <form class="user" action="{{ route('login.process') }}" method="POST">
