@@ -217,7 +217,7 @@ class ProdukController extends Controller
 
             // dd($item->gambar);
             if (!empty($item->gambar[0])) {
-                $img_url = asset('') . $item->gambar[0]->url;
+                $img_url = asset('public') . $item->gambar[0]->url;
             } else {
                 $img_url = '';
             }
