@@ -6,7 +6,7 @@
 
             <a class="navbar-brand" href="{{url('/')}}">
                 <div class="row">
-                    <img src="{{asset('assets/img')}}/angelic.png" class="w-25 mx-auto" alt="ANGELIC HOLYNPURE">
+                    <img src="{{asset('public/assets/img')}}/angelic.png" class="w-25 mx-auto" alt="ANGELIC HOLYNPURE">
                 </div>
             </a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"

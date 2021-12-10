@@ -56,8 +56,8 @@
                             class="text-uppercase text-dark">Checkout Our Products At:</strong>
                             <div class="row  mt-3">
                                 <div class="col-12">
-                                        <a href="{{$data->url_shopee}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('assets')}}/img/shopee.png" alt=""></a>
-                                        <a href="{{$data->url_tokped}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('assets')}}/img/tokopedia.png" alt=""></a>
+                                        <a href="{{$data->url_shopee}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('public/assets')}}/img/shopee.png" alt=""></a>
+                                        <a href="{{$data->url_tokped}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('public/assets')}}/img/tokopedia.png" alt=""></a>
                                 </div>
                             </div>
                     
@@ -85,7 +85,7 @@
             <div class="col-xl-3 col-lg-4 col-sm-6">
               <div class="product text-center">
                 <div class="position-relative mb-3">
-                  <div class="badge text-white badge-"></div><a class="d-block" href="#"><img class="img-fluid w-100" src="{{asset('')}}{{$item->gambar[0]->url}}" alt="..."></a>
+                  <div class="badge text-white badge-"></div><a class="d-block" href="#"><img class="img-fluid w-100" src="{{asset('public')}}/{{$item->gambar[0]->url}}" alt="..."></a>
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
                       <!-- <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li> -->

@@ -149,7 +149,7 @@ class ProdukController extends Controller
 
         foreach ($request->file() as $key => $file) {
 
-            $target_path = 'uploads/'.$request->input('kode_produk');
+            $target_path = 'public/uploads/'.$request->input('kode_produk');
         try {
             $file->move($target_path, $file->getClientOriginalName());
         } catch (\Throwable $err) {
