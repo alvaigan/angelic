@@ -52,7 +52,7 @@
                             </ul>
                         </div>
                     </div>
-                    <h6> <a class="reset-anchor  track-me-detail"
+                    <h6> <a class="reset-anchor track-me-detail"
                             href="{{ route('detail', $item->id) }}" data-produk="{{$item->nama_produk}}" data-kategori="{{$item->kategori->kategori}}">{{$item->nama_produk}}</a></h6>
                     <p class="small text-muted"></p>
                 </div>
@@ -129,18 +129,16 @@
 
 @push('js')
 <script type="text/javascript">
-    (function () {
       // track facebook pixel
-        $('.track-me-detail').click(() => {
+        $('.track-me-detail').on('click', () => {
           const produk = $(this).attr('data-produk')
           const kategori = $(this).attr('data-kategori')
           fbq('track', 'Detail', {
-            content_name: produk
-            content_category: kategori
+            content_name: produk,
+            content_category: kategori,
             content_type: "product"
           })
         })
-    })
 
 </script>
 @endpush
