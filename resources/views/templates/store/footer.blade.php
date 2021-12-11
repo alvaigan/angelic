@@ -12,7 +12,7 @@
             </div>
 
             <div class="col-md-4 offset-md-3">
-                <img class="img-fluid" src="{{asset('assets')}}/img/angelic-watermark.png" alt="">
+                <img class="img-fluid" src="{{asset('public/assets')}}/img/angelic-watermark.png" alt="">
             </div>
         </div>
         <div class="border-top pt-4" style="border-color: #1d1d1d !important">

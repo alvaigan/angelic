@@ -56,8 +56,8 @@
                             class="text-uppercase text-dark">Checkout Our Products At:</strong>
                             <div class="row  mt-3">
                                 <div class="col-12">
-                                        <a href="{{$data->url_shopee}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('public/assets')}}/img/shopee.png" alt=""></a>
-                                        <a href="{{$data->url_tokped}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('public/assets')}}/img/tokopedia.png" alt=""></a>
+                                        <a href="{{$data->url_shopee}}" class="track-located-shopee" data-produk="{{$data->nama_produk}}" data-kategori="{{$data->kategori->kategori}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('public/assets')}}/img/shopee.png" alt=""></a>
+                                        <a href="{{$data->url_tokped}}" class="track-located-tokopedia" data-produk="{{$data->nama_produk}}" data-kategori="{{$data->kategori->kategori}}" target="_blank" rel="noopener noreferrer"><img class="col-sm-4" src="{{asset('public/assets')}}/img/tokopedia.png" alt=""></a>
                                 </div>
                             </div>
                     
@@ -78,7 +78,7 @@
             </div>
         </div>
         <!-- RELATED PRODUCTS-->
-        <h2 class="h5 text-uppercase mb-4">Related products</h2>
+        <h2 class="h5 text-uppercase mb-4 {{ count($related) == 0 ? 'd-none' : '' }}">Related products</h2>
         <div class="row">
         @foreach ($related as $item)
               <!-- PRODUCT-->
@@ -89,12 +89,12 @@
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
                       <!-- <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li> -->
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="{{ route('detail', $item->id) }}">More Details</a></li>
+                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark track-me-detail" data-produk="{{$item->nama_produk}}" data-kategori="{{$item->kategori->kategori}}" href="{{ route('detail', $item->id) }}">More Details</a></li>
                       <!-- <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-toggle="modal"><i class="fas fa-expand"></i></a></li> -->
                     </ul>
                   </div>
                 </div>
-                <h6> <a class="reset-anchor" href="{{ route('detail', $item->id) }}">{{$item->nama_produk}}</a></h6>
+                <h6> <a class="reset-anchor track-me-detail" data-produk="{{$item->nama_produk}}" data-kategori="{{$item->kategori->kategori}}" href="{{ route('detail', $item->id) }}">{{$item->nama_produk}}</a></h6>
                 <p class="small text-muted"></p>
               </div>
             </div>  
@@ -104,3 +104,47 @@
 </section>
 
 @endsection
+
+@push('js')
+<script type="text/javascript">
+      // track facebook pixel
+        $('.track-me-detail').on('click', () => {
+          const produk = $('.track-me-detail').attr('data-produk')
+          const kategori = $('.track-me-detail').attr('data-kategori')
+
+          fbq('track', 'Detail', {
+            content_name: produk,
+            content_category: kategori,
+            content_type: "product"
+          })
+        })
+
+        $('.track-located-shopee').on('click', () => {
+          const produk = $('.track-located-shopee').attr('data-produk')
+          const kategori = $('.track-located-shopee').attr('data-kategori')
+          const url = $('.track-located-shopee').attr('href')
+
+          fbq('track', 'RedirectToShopee', {
+            content_name: produk,
+            content_category: kategori,
+            content_type: "product",
+            delivery_category:"in_store",
+            url: url
+          })
+        })
+
+        $('.track-located-tokopedia').on('click', () => {
+          const produk = $('.track-located-tokopedia').attr('data-produk')
+          const kategori = $('.track-located-tokopedia').attr('data-kategori')
+          const url = $('.track-located-tokopedia').attr('href')
+
+          fbq('track', 'RedirectToTokopedia', {
+            content_name: produk,
+            content_category: kategori,
+            content_type: "product",
+            delivery_category:"in_store",
+            url: url
+          })
+        })
+</script>
+@endpush

@@ -131,8 +131,9 @@
 <script type="text/javascript">
       // track facebook pixel
         $('.track-me-detail').on('click', () => {
-          const produk = $(this).attr('data-produk')
-          const kategori = $(this).attr('data-kategori')
+          const produk = $('.track-me-detail').attr('data-produk')
+          const kategori = $('.track-me-detail').attr('data-kategori')
+
           fbq('track', 'Detail', {
             content_name: produk,
             content_category: kategori,

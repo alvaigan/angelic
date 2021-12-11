@@ -67,12 +67,12 @@
                         <div class="product-overlay">
                           <ul class="mb-0 list-inline">
                             <!-- <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li> -->
-                            <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="{{ route('detail', $item->id) }}">More Details</a></li>
+                            <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark track-me-detail" data-produk="{{$item->nama_produk}}" data-kategori="{{$item->kategori->kategori}}" href="{{ route('detail', $item->id) }}">More Details</a></li>
                             <!-- <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-toggle="modal"><i class="fas fa-expand"></i></a></li> -->
                           </ul>
                         </div>
                       </div>
-                      <h6> <a class="reset-anchor" href="{{ route('detail', $item->id) }}">{{$item->nama_produk}}</a></h6>
+                      <h6> <a class="reset-anchor track-me-detail" data-produk="{{$item->nama_produk}}" data-kategori="{{$item->kategori->kategori}}" href="{{ route('detail', $item->id) }}">{{$item->nama_produk}}</a></h6>
                       <!-- <p class="small text-muted">$250</p> -->
                     </div>
                   </div>
@@ -94,3 +94,20 @@
         </section>
       </div>
 @endsection
+
+@push('js')
+<script type="text/javascript">
+      // track facebook pixel
+        $('.track-me-detail').on('click', () => {
+          const produk = $('.track-me-detail').attr('data-produk')
+          const kategori = $('.track-me-detail').attr('data-kategori')
+
+          fbq('track', 'Detail', {
+            content_name: produk,
+            content_category: kategori,
+            content_type: "product"
+          })
+        })
+
+</script>
+@endpush
