@@ -247,7 +247,7 @@ if (isset($data)) {
                                 @if (isset($data))
                                 <div id="picture" class="row">
                                     @foreach ($data['gambar'] as $row)
-                                    <img src="{{ url($row->url) }}" class="col-sm-3 img-fluid rounded" alt="...">
+                                    <img src="{{ asset('public') }}/{{ $row->url }}" class="col-sm-3 img-fluid rounded" alt="...">
                                     @endforeach
                                 </div>
                                 @endif
