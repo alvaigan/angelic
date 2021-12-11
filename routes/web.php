@@ -15,6 +15,9 @@ use App\Http\Controllers\MainStoreController;
 */
 // Store
 Route::get('/', [MainStoreController::class, 'index'])->name('home');
+Route::get('/public', function() {
+    return redirect('home');
+});
 Route::get('/home', [MainStoreController::class, 'index'])->name('home');
 Route::get('/catalogue', [MainStoreController::class, 'catalogue'])->name('catalogue');
 Route::get('/detail/{id}', [MainStoreController::class, 'detail'])->name('detail');
