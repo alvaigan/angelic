@@ -141,5 +141,11 @@
           })
         })
 
+
+        $('#productView').modal('show')
+
+        // $(function(){
+        //     modal
+        // })
 </script>
 @endpush
