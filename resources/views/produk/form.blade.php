@@ -185,7 +185,7 @@ if (isset($data)) {
                             <label for="url_shopeee" class="col-sm-4 col-lg-2 col-form-label">URL Tokopedia</label>
                             <div class="col-sm-10">
                                 <input type="url" class="form-control" id="url_tokped" name="url_tokped"
-                                    value="{{isset($data) ? $data['url_shopee'] : ""}}" required />
+                                    value="{{isset($data) ? $data['url_tokped'] : ""}}" required />
                                 <div class="invalid-feedback">
                                     URL Tokopedia tidak boleh kosong!
                                 </div>
