@@ -175,7 +175,7 @@ class ProdukController extends Controller
         $produk->short_desc = $request->input('short_desc');
         $produk->deskripsi = $request->input('deskripsi');
         $produk->url_shopee = $request->input('url_shopee');
-        $produk->url_shopee = $request->input('url_tokped');
+        $produk->url_tokped = $request->input('url_tokped');
 
         // return dd($produk);
         try {

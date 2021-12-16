@@ -3,8 +3,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
-                <div class="row align-items-stretch">
-                    
+                <div class="row align-items-stretch">                  
                     <div class="col-lg-12">
                         <button class="close p-4" type="button" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">×</span></button>
