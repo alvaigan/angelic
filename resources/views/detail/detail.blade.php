@@ -73,7 +73,16 @@
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                 <div class="p-4 p-lg-5 bg-white">
                     <h6 class="text-uppercase">Product description </h6>
-                    <p class="text-muted text-small mb-0">{{$data->deskripsi}}</p>
+                    <p id="thisDesc" class="text-muted text-small mb-0">
+                      <script>
+                        var el = document.getElementById("thisDesc")
+                        var doc = new DOMParser().parseFromString("{{$data->deskripsi}}", "text/html");
+
+                        console.log(typeof doc.firstChild.innerText)
+
+                        el.innerHTML = doc.firstChild.innerText
+                      </script>
+                    </p>
                 </div>
             </div>
         </div>
