@@ -19,9 +19,9 @@
                 </a>
             </div>
             <div class="col-md-4 mb-4 mb-md-0">
-                <!-- <a class="category-item mb-4" href="{{route('catalogue', ['kategori'=> $kategori[1]['id']])}}">
-                    <img class="img-fluid" src="{{asset('public/assets/store')}}/img/bodyarmy.jpg" alt="">
-                    <strong class="category-item-title text-center">{{$kategori[1]['kategori']}}</strong>
+                <!-- <a class="category-item mb-4" href="{{-- route('catalogue', ['kategori'=> $kategori[1]['id']]) --}}">
+                    <img class="img-fluid" src="{{-- asset('public/assets/store') --}}/img/bodyarmy.jpg" alt="">
+                    <strong class="category-item-title text-center">{{-- $kategori[1]['kategori'] --}}</strong>
                 </a> -->
                 <a class="category-item" href="{{route('catalogue', ['kategori'=> $kategori[2]['id']])}}">
                     <img class="img-fluid" src="{{asset('public/assets/store')}}/img/tshirt.png" alt="">
