@@ -144,7 +144,7 @@ class KategoriController extends Controller
             $this_data[] = "
                 <div class='btn-group mr-2'>
                     <a href='" . route('kategori.edit', $item["id"]) . "' class='btn btn-warning'><i class='fa fa-pen'></i></a>
-                    <a href='" . route('kategori.destroy', $item["id"]) . "' class='btn btn-danger'><i class='fa fa-trash'></i></a>
+                    <a href='" . route('kategori.destroy', $item["id"]) . "' class='btn btn-danger disabled'><i class='fa fa-trash'></i></a>
                 </div>
             ";
 
