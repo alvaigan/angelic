@@ -35,15 +35,15 @@ class UserController extends Controller
             'title' => 'Form Tambah'
         ];
 
-        return view('user.form')->with(['data'=> $data]);
-    }
+    return view('user.form')->with(['data'=> $data]);
+}
 
-    public function addProcess(Request $req)
-    {
-        if (empty(session('userdata'))) {
-            return redirect()->route('login.page');
-        }
-        
+public function addProcess(Request $req)
+{
+    if (empty(session('userdata'))) {
+        return redirect()->route('login.page');
+    }
+    
         $username = $req->username;
         $password = $req->password;
         $password = Hash::make($password, ['rounds'=>10]);

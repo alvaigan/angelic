@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use App\Models\Tag;
+use App\Models\DetailTag;
 use App\Models\Gambar;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class ProdukController extends Controller
         if (empty(session('userdata'))) {
             return redirect()->route('login.page');
         }
-        
+
         return view('produk.list');
     }
 
@@ -33,8 +35,9 @@ class ProdukController extends Controller
         if (empty(session('userdata'))) {
             return redirect()->route('login.page');
         }
-        
+
         $data['kategori'] = Kategori::all();
+        $data['tag'] = Tag::all();
 
         // dd($data['kategori'][1]);
         return view('produk.form')->with($data);
@@ -52,6 +55,8 @@ class ProdukController extends Controller
             return redirect()->route('login.page');
         }
 
+        // dd($request->all());
+
         $urls = [];
 
         foreach ($request->file() as $key => $file) {
@@ -68,20 +73,15 @@ class ProdukController extends Controller
         array_push($urls, $this_url);
 
         }
-    
-        $tags = explode(',', $request->input('tags'));
 
         $produk = new Produk;
         $produk->kode_produk = $request->input('kode_produk');
         $produk->nama_produk = $request->input('nama_produk');
         $produk->id_kategori = $request->input('kategori');
-        $produk->harga = 0;
-        $produk->stok = 0;
-        $produk->tags = json_encode($tags);
+        $produk->harga_asli = $request->input('harga_asli');
+        $produk->harga_coret = $request->input('harga_coret');
         $produk->short_desc = $request->input('short_desc');
         $produk->deskripsi = $request->input('deskripsi');
-        $produk->url_shopee = $request->input('url_shopee');
-        $produk->url_tokped = $request->input('url_tokped');
 
         try {
             $produk->save();
@@ -93,10 +93,18 @@ class ProdukController extends Controller
 
                 $t_gambar->save();
             }
-         
+
+            foreach($request->input('tag') as $tag) {
+                $detail_tag = new DetailTag;
+                $detail_tag->id_produk = $produk->id;
+                $detail_tag->id_tag = $tag;
+
+                $detail_tag->save();
+            }
+
             return redirect()->route('produk.index')->with('success', 'Tambah barang berhasil!');
         } catch (\Throwable $err) {
-            
+
             return redirect()->back()->with('error', 'Tambah barang gagal! : '. $err->getMessage());
         }
     }
@@ -123,10 +131,11 @@ class ProdukController extends Controller
         if (empty(session('userdata'))) {
             return redirect()->route('login.page');
         }
-        
-        $data['data'] = Produk::with('gambar')->where('id', $id)->first();
+
+        $data['data'] = Produk::with(['gambar', 'detail_tag'])->where('id', $id)->first();
         $data['kategori'] = Kategori::all();
-        
+        $data['tag'] = Tag::all();
+
         return view('produk.form')->with($data);
     }
 
@@ -142,45 +151,65 @@ class ProdukController extends Controller
         if (empty(session('userdata'))) {
             return redirect()->route('login.page');
         }
-        
+
+        // dd($request->file());
+
+        $urls = [];
         if (!empty($request->file())) {
 
-            $urls = [];
 
         foreach ($request->file() as $key => $file) {
 
             $target_path = 'public/uploads/'.$request->input('kode_produk');
-        try {
-            $file->move($target_path, $file->getClientOriginalName());
-        } catch (\Throwable $err) {
-            return redirect()->back()->with('error', $err->getMessage());
+            try {
+                $file->move($target_path, $file->getClientOriginalName());
+            } catch (\Throwable $err) {
+                return redirect()->back()->with('error', $err->getMessage());
+            }
+
+            $this_url = $target_path."/".$file->getClientOriginalName();
+
+            array_push($urls, $this_url);
+
+            }
         }
-
-        $this_url = $target_path."/".$file->getClientOriginalName();
-
-        array_push($urls, $this_url);
-
-        }
-        }
-
-        $tags = explode(',', $request->input('tags'));
 
         $produk = Produk::where('id', $id)->first();
         $produk->kode_produk = $request->input('kode_produk');
         $produk->nama_produk = $request->input('nama_produk');
         $produk->id_kategori = $request->input('kategori');
-        $produk->harga = 0;
-        $produk->stok = 0;
-        $produk->tags = json_encode($tags);
+        $produk->harga_asli = $request->input('harga_asli');
+        $produk->harga_coret = $request->input('harga_coret');
         $produk->short_desc = $request->input('short_desc');
         $produk->deskripsi = $request->input('deskripsi');
-        $produk->url_shopee = $request->input('url_shopee');
-        $produk->url_tokped = $request->input('url_tokped');
 
-        // return dd($produk);
         try {
             $produk->save();
-            
+
+            foreach($urls as $img) {
+                $t_gambar = new Gambar;
+                $t_gambar->id_produk = $produk->id;
+                $t_gambar->url = $img;
+
+                $t_gambar->save();
+            }
+
+            foreach($request->input('tag') as $key => $tag){
+                $DetailTag = DetailTag::where(['id_produk' => $id, 'id_tag' => $tag])->first();
+                if(!$DetailTag){
+                    $DetailTag = new DetailTag;
+                    $DetailTag->id_produk = $produk->id;
+                    $DetailTag->id_tag = $tag;
+                    $DetailTag->save();
+                } else {
+                  //$DetailTag->delete();
+                  $NewDetailTag = new DetailTag;
+                  $NewDetailTag->id_produk = $produk->id;
+                  $NewDetailTag->id_tag = $tag;
+                  $NewDetailTag->save();
+                } 
+            }
+
             return redirect()->route('produk.index')->with('success', "Edit barang berhasil!");
         } catch (\Throwable $err) {
             return redirect()->back()->with('error', "Edit barang gagal!: ".$err->getMessage());
@@ -198,7 +227,7 @@ class ProdukController extends Controller
         if (empty(session('userdata'))) {
             return redirect()->route('login.page');
         }
-        
+
         try {
             Produk::destroy($id);
         } catch (\Throwable $err) {
@@ -211,7 +240,7 @@ class ProdukController extends Controller
         $get_data = Produk::with('gambar')->get();
         $data = [];
 
-        // dd($get_data[2]);  
+        // dd($get_data[2]);
 
         foreach ($get_data as $key => $item) {
 

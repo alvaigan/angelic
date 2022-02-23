@@ -27,7 +27,7 @@ Route::get('/login', 'App\Http\Controllers\AuthorController@index')->name('login
 Route::post('/login', 'App\Http\Controllers\AuthorController@loginProcess')->name('login.process');
 Route::get('/logout', 'App\Http\Controllers\AuthorController@logout')->name('logout');
 
-// Admin: Dashboard 
+// Admin: Dashboard
 Route::get('/administrator', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
 
 // Admin: Menu User
@@ -75,6 +75,9 @@ Route::prefix('administrator')->group(function () {
     Route::post('/kategori/update/{id}', 'App\Http\Controllers\KategoriController@update')->name('kategori.update');
     Route::post('/kategori/destroy/{id}', 'App\Http\Controllers\KategoriController@destroy')->name('kategori.destroy');
     Route::get('/tablelist', 'App\Http\Controllers\KategoriController@getForTable')->name('kategori.tablelist');
+
+    // Admin: Gambar
+    Route::post('/img/delete/{id}', 'App\Http\Controllers\GambarController@destroy')->name('gambar.destroy');
 });
 
 

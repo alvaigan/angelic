@@ -17,8 +17,8 @@ class MainStoreController extends Controller
     }
 
     public function catalogue(Request $request)
-    {   
-        $kategori = $request->query('kategori'); 
+    {
+        $kategori = $request->query('kategori');
 
         $data['kategori'] = Kategori::all();
         if (!empty($request->query('kategori'))) {
@@ -33,7 +33,7 @@ class MainStoreController extends Controller
     }
 
     public function detail($id)
-    {   $data['data'] = Produk::with('gambar', 'kategori')->where('id', $id)->first();
+    {   $data['data'] = Produk::with('gambar', 'kategori', 'detail_tag', 'tag')->where('id', $id)->first();
         $data['related'] = Produk::limit(4)
             ->with('gambar', 'kategori')
             ->where([
