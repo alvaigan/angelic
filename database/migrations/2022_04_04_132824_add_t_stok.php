@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TKota extends Migration
+class AddTStok extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class TKota extends Migration
      */
     public function up()
     {
-        Schema::create('t_kota', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->integer('id_provinsi');
-            $table->string('kota');
+        Schema::create('t_stok', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_produk');
+            $table->string('size');
+            $table->integer('stok');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class TKota extends Migration
      */
     public function down()
     {
-        Schema::drop('t_kota');
+        Schema::dropIfExists('t_stok');
     }
 }

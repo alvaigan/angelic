@@ -1,4 +1,4 @@
-<!-- LIST BARANG -->
+<!-- LIST USER -->
 
 @extends('layouts.admin.app')
 
@@ -13,7 +13,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">List Barang</h1>
+            <h1 class="h3 mb-0 text-gray-800">List Tag</h1>
         </div>
 
         @include('templates.alerts')
@@ -27,8 +27,8 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <a href="{{ route('produk.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah
-                            Barang</a>
+                        <a href="{{ route('tag.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i>
+                            Tambah Tag</a>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -37,10 +37,7 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Gambar</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Kategori</th>
+                                        <th>Tag</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -59,9 +56,14 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
+        // Call the dataTables jQuery plugin
+        // $(document).ready(function() {
+        //     $('#dataTable').DataTable();
+        // });
+
         $(function() {
             let table = $('#dataTable').DataTable({
-                ajax: '{{ route('produk.tablelist') }}'
+                ajax: '{{ route('tag.tablelist') }}'
             });
 
             // Sweet Alert
@@ -95,11 +97,11 @@
                             } else {
                                 Swal.fire(
                                     'Berhasil!',
-                                    'Produk berhasil dihapus.',
+                                    'Salah satu data subscription telah dihapus.',
                                     'success'
                                 ).then(result => {
                                     if (result.value) {
-                                        table.ajax.reload()
+                                        table.ajax.reload();
                                     }
                                 })
                             }
@@ -107,6 +109,8 @@
                     }
                 })
             })
+
+            // $.fn.dataTable.ext.errMode = 'throw';
         })
     </script>
 @endpush

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TKecamatan extends Migration
+class AddTUkuran extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class TKecamatan extends Migration
      */
     public function up()
     {
-        Schema::create('t_kecamatan', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->integer('id_kota');
-            $table->string('kecamatan');
+        Schema::create('t_ukuran', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('ukuran');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class TKecamatan extends Migration
      */
     public function down()
     {
-        Schema::drop('t_kecamatan');
+        Schema::dropIfExists('t_ukuran');
     }
 }

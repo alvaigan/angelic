@@ -114,15 +114,15 @@
                                     @if (isset($tag))
                                         @foreach ($tag as $key => $item)
                                             <?php $checked = ''; ?>
-                                            @if(isset($data))
-                                            @foreach ($data->detail_tag as $key => $value)
-                                                @if ($value->id_produk == $data->id)
-                                                    <?php $checked = 'checked'; ?>
-                                                @else
-                                                    <?php $checked = ''; ?>
-                                                @endif
-                                                  @endforeach
-                                                  @endif
+                                            @if (isset($data))
+                                                @foreach ($data->detail_tag as $key => $value)
+                                                    @if ($value->id_produk == $data->id)
+                                                        <?php $checked = 'checked'; ?>
+                                                    @else
+                                                        <?php $checked = ''; ?>
+                                                    @endif
+                                                @endforeach
+                                            @endif
 
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="tag[]"

@@ -28,4 +28,8 @@ class Produk extends Model
     public function tag() {
         return $this->belongsToMany(Tag::class, 't_detail_tag', 'id_produk', 'id_tag');
     }
+    
+    public function stok() {
+        return $this->hasMany(Stok::class, 'id_produk', 'id');
+    }
 }

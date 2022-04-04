@@ -21,6 +21,10 @@ Route::get('/public', function() {
 Route::get('/home', [MainStoreController::class, 'index'])->name('home');
 Route::get('/catalogue', [MainStoreController::class, 'catalogue'])->name('catalogue');
 Route::get('/detail/{id}', [MainStoreController::class, 'detail'])->name('detail');
+Route::get('/cart', [MainStoreController::class, 'cart'])->name('cart');
+Route::get('/getincart', [MainStoreController::class, 'getAllInCart'])->name('getincart');
+Route::get('/checkout', [MainStoreController::class, 'checkout'])->name('checkout');
+Route::post('/checkout_process', [MainStoreController::class, 'checkout_process'])->name('checkout_process');
 
 // Login
 Route::get('/login', 'App\Http\Controllers\AuthorController@index')->name('login.page');
@@ -69,12 +73,31 @@ Route::prefix('administrator')->group(function () {
     Route::resource('produk', 'App\Http\Controllers\ProdukController')->except(['update','destroy']);
     Route::post('/produk/update/{id}', 'App\Http\Controllers\ProdukController@update')->name('produk.update');
     Route::post('/produk/destroy/{id}', 'App\Http\Controllers\ProdukController@destroy')->name('produk.destroy');
+    Route::post('/produk/editstok/{id}', 'App\Http\Controllers\ProdukController@editStok')->name('produk.editstok');
 
     // Admin: Kategori
     Route::resource('kategori', 'App\Http\Controllers\KategoriController')->except(['update', 'destroy']);
     Route::post('/kategori/update/{id}', 'App\Http\Controllers\KategoriController@update')->name('kategori.update');
     Route::post('/kategori/destroy/{id}', 'App\Http\Controllers\KategoriController@destroy')->name('kategori.destroy');
     Route::get('/tablelist', 'App\Http\Controllers\KategoriController@getForTable')->name('kategori.tablelist');
+    
+    // Admin: Tag
+    Route::get('/tag', 'App\Http\Controllers\TagController@index')->name('tag.list');
+    Route::get('/tag/add', 'App\Http\Controllers\TagController@create')->name('tag.create');
+    Route::post('/tag/add_process', 'App\Http\Controllers\TagController@store')->name('tag.store');
+    Route::get('/tag/detail/{id}', 'App\Http\Controllers\TagController@edit')->name('tag.edit');
+    Route::post('/tag/edit_process/{id}', 'App\Http\Controllers\TagController@update')->name( 'tag.update');
+    Route::delete('/tag/destroy/{id}', 'App\Http\Controllers\TagController@destroy')->name('tag.destroy');
+    Route::get('/tag/tablelist', 'App\Http\Controllers\TagController@getForTable')->name('tag.tablelist');
+
+    // Admin: Ukuran
+    Route::get('/ukuran', 'App\Http\Controllers\UkuranController@index')->name('ukuran.list');
+    Route::get('/ukuran/add', 'App\Http\Controllers\UkuranController@create')->name('ukuran.create');
+    Route::post('/ukuran/add_process', 'App\Http\Controllers\UkuranController@store')->name('ukuran.store');
+    Route::get('/ukuran/detail/{id}', 'App\Http\Controllers\UkuranController@edit')->name('ukuran.edit');
+    Route::post('/ukuran/edit_process/{id}', 'App\Http\Controllers\UkuranController@update')->name( 'ukuran.update');
+    Route::delete('/ukuran/destroy/{id}', 'App\Http\Controllers\UkuranController@destroy')->name('ukuran.destroy');
+    Route::get('/ukuran/tablelist', 'App\Http\Controllers\UkuranController@getForTable')->name('ukuran.tablelist');
 
     // Admin: Gambar
     Route::post('/img/delete/{id}', 'App\Http\Controllers\GambarController@destroy')->name('gambar.destroy');

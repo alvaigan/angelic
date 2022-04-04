@@ -6,6 +6,8 @@ use App\Models\Kategori;
 use App\Models\Tag;
 use App\Models\DetailTag;
 use App\Models\Gambar;
+use App\Models\Ukuran;
+use App\Models\Stok;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 
@@ -55,7 +57,11 @@ class ProdukController extends Controller
             return redirect()->route('login.page');
         }
 
-        // dd($request->all());
+        //  dd($request->all());
+
+        $ukuran = Ukuran::all();
+
+        // dd($ukuran);
 
         $urls = [];
 
@@ -102,6 +108,14 @@ class ProdukController extends Controller
                 $detail_tag->save();
             }
 
+            foreach($ukuran as $value) {
+                $stok = new Stok();
+                $stok->id_produk = $produk->id;
+                $stok->size = $value->ukuran;
+                $stok->stok = 0;
+                $stok->save();
+            }
+
             return redirect()->route('produk.index')->with('success', 'Tambah barang berhasil!');
         } catch (\Throwable $err) {
 
@@ -117,7 +131,8 @@ class ProdukController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['data'] = Produk::with(['kategori', 'gambar', 'detail_tag', 'stok'])->where('id', $id)->first();
+        return view('produk.show')->with($data);
     }
 
     /**
@@ -265,6 +280,7 @@ class ProdukController extends Controller
 
             $this_data[] = "
                 <div class='btn-group mr-2'>
+                    <a href='" . route('produk.show', $item["id"]) . "' class='btn btn-info'><i class='fa fa-eye'></i></a>
                     <a href='" . route('produk.edit', $item["id"]) . "' class='btn btn-warning'><i class='fa fa-pen'></i></a>
                     <a href='" . route('produk.destroy', $item["id"]) . "' class='btn btn-danger'><i class='fa fa-trash'></i></a>
                 </div>
@@ -281,5 +297,17 @@ class ProdukController extends Controller
         // dd($result['data'][2]);
 
         return response()->json($result);
+    }
+
+    public function editStok(Request $request, $id) {
+        if (empty(session('userdata'))) {
+            return redirect()->route('login.page');
+        }
+
+        $input_stok = $request->input('stok');
+
+        $stok = Stok::where('id', $id)->first();
+        $stok->stok = $input_stok;
+        $stok->save();
     }
 }

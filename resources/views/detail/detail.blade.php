@@ -29,20 +29,17 @@
                 </div>
                 <!-- PRODUCT DETAILS-->
                 <div class="col-lg-6">
-                    <!-- <ul class="list-inline mb-2">
-                                            <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-                                            <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-                                            <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-                                            <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-                                            <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-                                        </ul> -->
                     <h1>{{ $data->nama_produk }}</h1>
                     <!-- <p class="text-muted lead">$250</p> -->
-
+                    <p class="text-muted lead">Rp {{ $data->harga_asli }} <sup>Rp <s>{{ $data->harga_coret }}</s></sup>
+                    </p>
                     <br>
-                    <p class="text-small mb-4">{{ $data->short_desc }}</p>
+
+                    <p class="text-sm mb-4">{{ $data->short_desc }}</p>
 
                     <ul class="list-unstyled small d-inline-block">
+                        <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Product
+                                Code:</strong><a class="reset-anchor ml-2" href="#">{{ $data->kode_produk }}</a></li>
                         <li class="px-3 py-2 mb-1 bg-white text-muted"><strong
                                 class="text-uppercase text-dark">Category:</strong><a class="reset-anchor ml-2"
                                 href="#">{{ $data->kategori->kategori }}</a></li>
@@ -53,23 +50,41 @@
                                 <a class="reset-anchor ml-2" href="#">{{ $tag->tag }}</a>
                             @endforeach
                         </li>
-                        <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Checkout Our
-                                Products At:</strong>
-                            <div class="row  mt-3">
-                                <div class="col-12">
-                                    <a href="{{ $data->url_shopee }}" class="track-located-shopee"
-                                        data-produk="{{ $data->nama_produk }}"
-                                        data-kategori="{{ $data->kategori->kategori }}" target="_blank"
-                                        rel="noopener noreferrer"><img class="col-sm-4"
-                                            src="{{ asset('public/assets') }}/img/shopee.png" alt=""></a>
-                                    <a href="{{ $data->url_tokped }}" class="track-located-tokopedia"
-                                        data-produk="{{ $data->nama_produk }}"
-                                        data-kategori="{{ $data->kategori->kategori }}" target="_blank"
-                                        rel="noopener noreferrer"><img class="col-sm-4"
-                                            src="{{ asset('public/assets') }}/img/tokopedia.png" alt=""></a>
+
+                        <li class="px-3 py-2 mb-1 bg-white text-muted"><strong
+                                class="text-uppercase text-dark">Stock:</strong>
+                            @foreach ($data->stok as $stok)
+                                <a class="reset-anchor ml-2" href="#">{{ $stok->size }} ({{ $stok->stok }})</a>
+                            @endforeach
+                        </li>
+
+                        <li class="px-3 py-2 mb-1 bg-white text-muted"><strong
+                                class="text-uppercase text-dark">Size:</strong>
+                        </li>
+
+                        <li class="px-3 py-2 mb-1 bg-white text-muted">
+                            @foreach (isset($size) ? $size : [] as $s)
+                                <a class="btn btn-light reset-anchor mb-2 ukuran" href="#">{{ $s->ukuran }}</a>
+                            @endforeach
+                        </li>
+                    </ul>
+
+                    <div class="row align-items-stretch mb-4 gx-0">
+                        {{-- <div class="col-sm-7">
+                            <div class="border d-flex align-items-center justify-content-between py-1 px-3"><span
+                                    class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
+                                <div class="quantity">
+                                    <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
+                                    <input class="form-control border-0 shadow-0 p-0" type="text" value="1">
+                                    <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
                                 </div>
                             </div>
-                    </ul>
+                        </div> --}}
+                        <div class="col-sm-5"><a
+                                class="btn-product-tocart btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0"
+                                href="#" data-productname="{{ $data->id }}">Add to cart</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- DETAILS TABS-->
@@ -99,12 +114,12 @@
             <div class="row">
                 @foreach ($related as $item)
                     <!-- PRODUCT-->
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="col-sm-2 col-6 col-md-3">
                         <div class="product text-center">
                             <div class="position-relative mb-3">
                                 <div class="badge text-white badge-"></div><a class="d-block" href="#"><img
-                                        class="img-fluid w-100"
-                                        src="{{ asset('public') }}/{{ $item->gambar[0]->url }}" alt="..."></a>
+                                        class="img-fluid w-100" src="{{ asset('') }}/{{ $item->gambar[0]->url }}"
+                                        alt="..."></a>
                                 <div class="product-overlay">
                                     <ul class="mb-0 list-inline">
                                         <!-- <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li> -->
@@ -129,45 +144,90 @@
 @endsection
 
 @push('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script type="text/javascript">
-        // track facebook pixel
-        $('.track-me-detail').on('click', () => {
-            const produk = $('.track-me-detail').attr('data-produk')
-            const kategori = $('.track-me-detail').attr('data-kategori')
-
-            fbq('track', 'Detail', {
-                content_name: produk,
-                content_category: kategori,
-                content_type: "product"
-            })
+        var size = ""
+        $('.ukuran').on('click', function(e) {
+            size = $(this).text()
         })
 
-        $('.track-located-shopee').on('click', () => {
-            const produk = $('.track-located-shopee').attr('data-produk')
-            const kategori = $('.track-located-shopee').attr('data-kategori')
-            const url = $('.track-located-shopee').attr('href')
+        function searchSize(nameKey, myArray) {
+            for (var i = 0; i < myArray.length; i++) {
+                if (myArray[i].size == nameKey) {
+                    return true;
+                } else {
+                    console.log(myArray[i])
+                    return false
+                }
+            }
+        }
 
-            fbq('track', 'RedirectToShopee', {
-                content_name: produk,
-                content_category: kategori,
-                content_type: "product",
-                delivery_category: "in_store",
-                url: url
-            })
-        })
+        //add product to cart
+        $('.btn-product-tocart').on('click', function(e) {
 
-        $('.track-located-tokopedia').on('click', () => {
-            const produk = $('.track-located-tokopedia').attr('data-produk')
-            const kategori = $('.track-located-tokopedia').attr('data-kategori')
-            const url = $('.track-located-tokopedia').attr('href')
+            if (size == "") {
+                toastr.error('Size belum dipilih')
+                return false
+            }
 
-            fbq('track', 'RedirectToTokopedia', {
-                content_name: produk,
-                content_category: kategori,
-                content_type: "product",
-                delivery_category: "in_store",
-                url: url
-            })
+            e.preventDefault()
+            const produk = $(this).attr('data-productname')
+            let tochart = []
+
+            if (localStorage.getItem('product') != null) {
+                let product = JSON.parse(localStorage.getItem('product'))
+                let found = false
+                for (var item of product) {
+                    if (item.size == size) {
+                        found = true
+                    }
+                }
+
+                if (found == true) {
+                    toastr.error('Size sudah ada di Cart')
+
+                    return false
+                } else {
+                    product.push({
+                        id: produk,
+                        size: size,
+                        qty: 1
+                    })
+                    localStorage.setItem('product', JSON.stringify(product))
+                }
+
+            } else {
+                let idProduct = {
+                    id: produk,
+                    size: size,
+                    qty: 1
+                }
+
+                tochart.push(idProduct)
+                localStorage.setItem('product', JSON.stringify(tochart))
+            }
+
+            console.log(localStorage.getItem('product'))
+
+            let currentproduct = JSON.parse(localStorage.getItem('product'))
+            let inCart = 0,
+                cartWording = ""
+            if (currentproduct != null) {
+                inCart = currentproduct.length
+            }
+
+            if (inCart == 0) {
+                cartWording = " (" + inCart + ")"
+            } else {
+                cartWording = " (" + inCart + ") <i class='fa fa-dot-circle text-danger'></i>"
+            }
+
+            $('.cart-length').html(cartWording)
+            toastr.success('Barang ditambahkan ke Cart!', 'Success')
+
+            if (currentproduct == null) encoded = ""
+            let encoded = encodeURIComponent(localStorage.getItem('product'))
+            $('.tocart').attr('href', '{{ url('') }}/cart?data=' + encoded)
         })
     </script>
 @endpush

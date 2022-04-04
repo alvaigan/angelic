@@ -19,10 +19,10 @@
                         if ($key > 2) {
                             continue;
                         } else { ?>
-                        <div class="col-md-4 mb-4 mb-md-0">
-                            <div class="card border-second mb-3 text-center" style="max-width: 18rem; height: 250px">
+                        <div class="col-md-4 col-6 mb-4 mb-md-0">
+                            <div class="card border-second mb-3 text-center" style="height: 250px">
                                 <div class="card-body text-primary">
-                                    <h3 class="card-title mt-5 mb-5">{{ $item->kategori }}</h3>
+                                    <h4 class="card-title mt-5 mb-5">{{ $item->kategori }}</h4>
                                     <a href="{{ route('catalogue') }}?kategori={{ $item->id }}"
                                         class="col-12 btn btn-dark mt-5">View</a>
                                 </div>
@@ -50,12 +50,16 @@
                                         alt="..."></a>
                                 <div class="product-overlay">
                                     <ul class="mb-0 list-inline">
-                                        <!-- <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li> -->
                                         <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark track-me-detail"
                                                 href="{{ route('detail', $item->id) }}"
                                                 data-produk="{{ $item->nama_produk }}"
                                                 data-kategori="{{ $item->kategori->kategori }}">More Details</a></li>
-                                        <!-- <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-toggle="modal"><i class="fas fa-expand"></i></a></li> -->
+
+                                        {{-- <li class="list-inline-item mr-0"><a
+                                                class="btn btn-sm btn-outline-dark btn-product-tochart" href="#"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Add to chart"
+                                                data-productname="{{ $item->id }}"><i class="fas fa-plus"></i></a>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -138,6 +142,7 @@
 @endsection
 
 @push('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script type="text/javascript">
         // track facebook pixel
         $('.track-me-detail').on('click', () => {
@@ -154,8 +159,66 @@
 
         $('#productView').modal('show')
 
-        // $(function(){
-        //     modal
-        // })
+
+        //add product to chart
+        $('.btn-product-tochart').on('click', function(e) {
+            e.preventDefault()
+            const produk = $(this).attr('data-productname')
+            let tochart = []
+
+            function search(nameKey, myArray) {
+                for (var i = 0; i < myArray.length; i++) {
+                    if (myArray[i].id == nameKey) {
+                        return myArray[i]
+                    }
+                }
+            }
+
+            if (localStorage.getItem('product') != null) {
+                let product = JSON.parse(localStorage.getItem('product'))
+                let found = search(produk, product)
+
+                console.log(found)
+                if (found != null) {
+                    alert('Barang sudah ditambahkan! Silakan edit di keranjang ya')
+                    return false
+                } else {
+                    product.push({
+                        id: produk
+                    })
+                    localStorage.setItem('product', JSON.stringify(product))
+                }
+
+            } else {
+                let idProduct = {
+                    id: produk
+                }
+
+                tochart.push(idProduct)
+                localStorage.setItem('product', JSON.stringify(tochart))
+            }
+
+            console.log(localStorage.getItem('product'))
+
+            let currentproduct = JSON.parse(localStorage.getItem('product'))
+            let inCart = 0,
+                cartWording = ""
+            if (currentproduct != null) {
+                inCart = currentproduct.length
+            }
+
+            if (inCart == 0) {
+                cartWording = " (" + inCart + ")"
+            } else {
+                cartWording = " (" + inCart + ") <i class='fa fa-dot-circle text-danger'></i>"
+            }
+
+            $('.cart-length').html(cartWording)
+            toastr.success('Barang ditambahkan ke Cart!', 'Success')
+
+            if (currentproduct == null) encoded = ""
+            let encoded = encodeURIComponent(localStorage.getItem('product'))
+            $('.tocart').attr('href', '{{ url('') }}/cart?data=' + encoded)
+        })
     </script>
 @endpush

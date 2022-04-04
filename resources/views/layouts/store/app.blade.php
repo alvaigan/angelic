@@ -63,7 +63,8 @@
             src="https://www.facebook.com/tr?id=359614955964158&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
 
-    @method('css')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @stack('css')
 </head>
 
 <body>

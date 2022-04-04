@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
+use App\Models\Ukuran;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class UkuranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class TagController extends Controller
             return redirect()->route('login.page');
         }
 
-        return view('tag.list');
+        return view('ukuran.list');
     }
 
     /**
@@ -32,7 +32,7 @@ class TagController extends Controller
             return redirect()->route('login.page');
         }
         
-        return view('tag.form');
+        return view('ukuran.form');
     }
 
     /**
@@ -48,15 +48,14 @@ class TagController extends Controller
         }
         
         try {
-            $Tag = new Tag;
-            $Tag->tag = $request->input('tag');
-            $Tag->save();
+            $Ukuran = new Ukuran;
+            $Ukuran->ukuran = $request->input('ukuran');
+            $Ukuran->save();
             
-            return redirect()->route('tag.list');
+            return redirect()->route('ukuran.list');
         } catch (\Throwable $err) {
             return redirect()->back()->with('error', $err->getMessage());
         }
-        
     }
 
     /**
@@ -82,9 +81,9 @@ class TagController extends Controller
             return redirect()->route('login.page');
         }
         
-        $data = Tag::where('id', $id)->first();
+        $data = Ukuran::where('id', $id)->first();
 
-        return view('tag.form')->with(['data'=> $data]);
+        return view('ukuran.form')->with(['data'=> $data]);
     }
 
     /**
@@ -101,13 +100,13 @@ class TagController extends Controller
         }
         
         try {
-            $data = Tag::where('id', $id)->first();
-            $data->tag = $request->input('tag');
+            $data = Ukuran::where('id', $id)->first();
+            $data->ukuran = $request->input('ukuran');
             $data->save();
 
-            return redirect()->route('tag.list')->with('success', "Update data berhasil");
+            return redirect()->route('ukuran.list')->with('success', "Update data berhasil");
         } catch (\Throwable $err) {
-            return redirect()->route('tag.list')->with('error', $err->getMessage());
+            return redirect()->route('ukuran.list')->with('error', $err->getMessage());
         }
     }
 
@@ -124,27 +123,28 @@ class TagController extends Controller
         }
         
         try {
-            Tag::destroy($id);
+            Ukuran::destroy($id);
         } catch (\Throwable $err) {
             return redirect()->back()->with('error', $err->getMessage());
         }
-    }   
+    }
 
+    
     public function getForTable()
     {   
-        $get_data = Tag::all();
+        $get_data = Ukuran::all();
         $data = [];
 
         foreach ($get_data as $key => $item) {
             $this_data = [];
             $this_data[] = $key + 1;
             //    $this_data['id'] = $item['id'];
-            $this_data[] = $item['tag'];
+            $this_data[] = $item['ukuran'];
 
             $this_data[] = "
                 <div class='btn-group mr-2'>
-                    <a href='" . route('tag.edit', $item["id"]) . "' class='btn btn-warning'><i class='fa fa-pen'></i></a>
-                    <a href='" . route('tag.destroy', $item["id"]) . "' class='btn btn-danger disabled'><i class='fa fa-trash'></i></a>
+                    <a href='" . route('ukuran.edit', $item["id"]) . "' class='btn btn-warning'><i class='fa fa-pen'></i></a>
+                    <a href='" . route('ukuran.destroy', $item["id"]) . "' class='btn btn-danger disabled'><i class='fa fa-trash'></i></a>
                 </div>
             ";
 
@@ -159,4 +159,4 @@ class TagController extends Controller
         //    dd($result);
         return response()->json($result);
     }
- }
+}
