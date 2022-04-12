@@ -57,6 +57,9 @@
                     <li class="nav-item"><a class="nav-link {{ $page == 'checkout' ? 'active' : '' }}"
                             href="{{ route('checkout') }}/?data="> <i class="fas fa-box me-1 text-gray"></i>
                             Checking out</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $page == 'checkorder' ? 'active' : '' }}"
+                            href="{{ route('checkorder') }}"> <i class="fas fa-info me-1 text-gray"></i>
+                            Check order</a></li>
                 </ul>
 
             </div>

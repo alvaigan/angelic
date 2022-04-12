@@ -89,7 +89,7 @@
         <div id="collapseKonten" class="collapse" aria-labelledby="headingKonten" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Kelola Data Konten:</h6>
-                <a class="collapse-item" href="#">Banner</a>
+                <a class="collapse-item" href="{{ route('banner.list') }}">Banner</a>
             </div>
         </div>
     </li>
@@ -113,9 +113,16 @@
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Kelola Data Transaksi:</h6>
-                <a class="collapse-item" href="#">Transaksi Masuk</a> <!-- Status: baru -->
-                <a class="collapse-item" href="#">Transaksi Dalam Proses</a> <!-- Status: dikemas, dikirim -->
-                <a class="collapse-item" href="#">Selesai</a> <!-- Status: selesai -->
+                <a class="collapse-item" href="{{ route('transaksi.neworder') }}">Order Masuk</a>
+                <!-- Status: baru -->
+                <a class="collapse-item" href="{{ route('transaksi.dibayar') }}">Sudah Dibayar</a>
+                <!-- Status: dibayar -->
+                <a class="collapse-item" href="{{ route('transaksi.dikemas') }}">Packaging</a>
+                <!-- Status: dikemas -->
+                <a class="collapse-item" href="{{ route('transaksi.dikirim') }}">Dikirim</a>
+                <!-- Status: dikirim -->
+                <a class="collapse-item" href="{{ route('transaksi.selesai') }}">Selesai</a>
+                <!-- Status: selesai -->
             </div>
         </div>
     </li>

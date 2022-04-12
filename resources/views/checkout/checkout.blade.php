@@ -1,7 +1,9 @@
-@extends('layouts.store.app');
+@extends('layouts.store.app')
 
 @section('content')
     <div class="container">
+
+        @include('templates.alerts')
         <!-- HERO SECTION-->
         <section class="py-5 bg-light">
             <div class="container">
@@ -95,7 +97,7 @@
                             <input type="hidden" name="order" class="order" value="">
 
                             <div class="col-lg-12 form-group mt-3">
-                                <button class="btn btn-dark" type="submit">Order Sekarang</button>
+                                <button class="btn btn-dark" type="submit">Checkout</button>
                                 <button class="btn btn-outline-dark cancel">Batalkan Order</button>
                             </div>
                         </div>

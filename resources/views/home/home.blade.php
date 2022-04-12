@@ -19,18 +19,27 @@
                         if ($key > 2) {
                             continue;
                         } else { ?>
-                        <div class="col-md-4 col-6 mb-4 mb-md-0">
+                        <div class="col-md-3 col-6 mb-4 mb-md-0">
                             <div class="card border-second mb-3 text-center" style="height: 250px">
                                 <div class="card-body text-primary">
                                     <h4 class="card-title mt-5 mb-5">{{ $item->kategori }}</h4>
                                     <a href="{{ route('catalogue') }}?kategori={{ $item->id }}"
-                                        class="col-12 btn btn-dark mt-5">View</a>
+                                        class="col-12 btn btn-dark mt-4">View</a>
                                 </div>
                             </div>
                         </div>
                         <?php } ?>
                     @endforeach
                 @endif
+                <div class="col-md-3 col-6 mb-4 mb-md-0">
+                    <div class="card border-second mb-3 text-center" style="height: 250px">
+                        <div class="card-body text-secondary">
+                            <h4 class="card-title mt-5 mb-5">Check Products</h4>
+                            <a href="{{ route('catalogue') }}" class="col-12 btn btn-secondary mt-4">More <i
+                                    class="fa fa-arrow-right text-small"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- TRENDING PRODUCTS-->
@@ -76,7 +85,7 @@
         <section class="py-5 bg-light">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-lg-4 mb-3 mb-lg-0">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
                         <div class="d-inline-block">
                             <div class="media align-items-end">
                                 <svg class="svg-icon svg-icon-big svg-icon-light">
@@ -84,12 +93,12 @@
                                 </svg>
                                 <div class="media-body text-left ml-3">
                                     <h6 class="text-uppercase mb-1">On Time Delivery</h6>
-                                    <p class="text-small mb-0 text-muted">Good Packaging</p>
+                                    <p class="text-small mb-0 text-muted">With Good Packaging</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 mb-3 mb-lg-0">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
                         <div class="d-inline-block">
                             <div class="media align-items-end">
                                 <svg class="svg-icon svg-icon-big svg-icon-light">
@@ -97,12 +106,12 @@
                                 </svg>
                                 <div class="media-body text-left ml-3">
                                     <h6 class="text-uppercase mb-1">24 x 7 service</h6>
-                                    <p class="text-small mb-0 text-muted">Responsive Everyday</p>
+                                    <p class="text-small mb-0 text-muted">Responsible for service</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
                         <div class="d-inline-block">
                             <div class="media align-items-end">
                                 <svg class="svg-icon svg-icon-big svg-icon-light">
@@ -130,10 +139,10 @@
                     <div class="col-lg-6 pull-right">
                         <a href="https://shopee.co.id/angelic_official?smtt=0.0.9" target="blank"><img
                                 src="{{ asset('public/assets') }}/img/shopee.png" alt="shopee"
-                                class="col-lg-4"></a>
+                                class="col-lg-4 col-4"></a>
                         <a href="https://www.tokopedia.com/angelicofficial?source=universe&st=product" target="blank"><img
                                 src="{{ asset('public/assets') }}/img/tokopedia.png" alt="tokped"
-                                class="col-lg-4"></a>
+                                class="col-lg-4 col-4"></a>
                     </div>
                 </div>
             </div>

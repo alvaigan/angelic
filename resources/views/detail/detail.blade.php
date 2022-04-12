@@ -60,11 +60,8 @@
 
                         <li class="px-3 py-2 mb-1 bg-white text-muted"><strong
                                 class="text-uppercase text-dark">Size:</strong>
-                        </li>
-
-                        <li class="px-3 py-2 mb-1 bg-white text-muted">
                             @foreach (isset($size) ? $size : [] as $s)
-                                <a class="btn btn-light reset-anchor mb-2 ukuran" href="#">{{ $s->ukuran }}</a>
+                                <a class="btn btn-secondary reset-anchor mb-2 ukuran" href="#">{{ $s->ukuran }}</a>
                             @endforeach
                         </li>
                     </ul>
@@ -149,6 +146,7 @@
         var size = ""
         $('.ukuran').on('click', function(e) {
             size = $(this).text()
+            toastr.info('Ukuran "' + size + '" dipilih')
         })
 
         function searchSize(nameKey, myArray) {

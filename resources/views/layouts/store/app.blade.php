@@ -9,27 +9,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('public/assets/store') }}/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Lightbox-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/vendor/lightbox2/css/lightbox.min.css">
+    <link rel="stylesheet" href="{{ asset('public/assets/store') }}/vendor/lightbox2/css/lightbox.min.css">
     <!-- Range slider-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/vendor/nouislider/nouislider.min.css">
+    <link rel="stylesheet" href="{{ asset('public/assets/store') }}/vendor/nouislider/nouislider.min.css">
     <!-- Bootstrap select-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/vendor/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+        href="{{ asset('public/assets/store') }}/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <!-- Owl Carousel-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/vendor/owl.carousel2/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/vendor/owl.carousel2/assets/owl.theme.default.css">
+    <link rel="stylesheet" href="{{ asset('public/assets/store') }}/vendor/owl.carousel2/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="{{ asset('public/assets/store') }}/vendor/owl.carousel2/assets/owl.theme.default.css">
     <!-- Google fonts-->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="{{ asset('public/assets/store') }}/css/style.default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{asset('public/assets/store')}}/css/custom.css">
+    <link rel="stylesheet" href="{{ asset('public/assets/store') }}/css/custom.css">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{{asset('public/assets/store')}}/img/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('public/assets/store') }}/img/favicon.png">
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -37,9 +39,9 @@
 
     <!-- Facebook Pixel Code -->
     <script>
-        ! function (f, b, e, v, n, t, s) {
+        ! function(f, b, e, v, n, t, s) {
             if (f.fbq) return;
-            n = f.fbq = function () {
+            n = f.fbq = function() {
                 n.callMethod ?
                     n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
@@ -57,7 +59,6 @@
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '359614955964158');
         fbq('track', 'PageView');
-
     </script>
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=359614955964158&ev=PageView&noscript=1" /></noscript>
@@ -68,21 +69,25 @@
 </head>
 
 <body>
-    <div class="page-holder">
+    <div
+        class="page-holder {{ (isset($page) && $page == 'detail') || $page == 'checkouted_info' || $page == 'checkorder' ? 'bg-light' : '' }}">
         @include('templates.store.header')
 
         @yield('content')
 
-        @include('templates.store.footer')
+        @if (isset($page) && $page !== 'checkorder')
+            @include('templates.store.footer')
+        @endif
+
         <!-- JavaScript files-->
-        <script src="{{asset('public/assets/store')}}/vendor/jquery/jquery.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/vendor/lightbox2/js/lightbox.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/vendor/nouislider/nouislider.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/vendor/owl.carousel2/owl.carousel.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
-        <script src="{{asset('public/assets/store')}}/js/front.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/jquery/jquery.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/lightbox2/js/lightbox.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/nouislider/nouislider.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/owl.carousel2/owl.carousel.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
+        <script src="{{ asset('public/assets/store') }}/js/front.js"></script>
         <script>
             // ------------------------------------------------------- //
             //   Inject SVG Sprite - 
@@ -94,7 +99,7 @@
                 var ajax = new XMLHttpRequest();
                 ajax.open("GET", path, true);
                 ajax.send();
-                ajax.onload = function (e) {
+                ajax.onload = function(e) {
                     var div = document.createElement("div");
                     div.className = 'd-none';
                     div.innerHTML = ajax.responseText;
@@ -106,7 +111,6 @@
             // while using file:// protocol
             // pls don't forget to change to your domain :)
             injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
-
         </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"

@@ -25,6 +25,10 @@ Route::get('/cart', [MainStoreController::class, 'cart'])->name('cart');
 Route::get('/getincart', [MainStoreController::class, 'getAllInCart'])->name('getincart');
 Route::get('/checkout', [MainStoreController::class, 'checkout'])->name('checkout');
 Route::post('/checkout_process', [MainStoreController::class, 'checkout_process'])->name('checkout_process');
+Route::get('/direct_whatsapp/{id}', [MainStoreController::class, 'direct_whatsapp'])->name('direct_whatsapp');
+Route::get('/checkouted_info/{id}', [MainStoreController::class, 'checkouted_info'])->name('checkouted_info');
+Route::get('/checkorder', [MainStoreController::class, 'checkorder'])->name('checkorder');
+Route::post('/checkorder_process', [MainStoreController::class, 'checkorder_process'])->name('checkorder_process');
 
 // Login
 Route::get('/login', 'App\Http\Controllers\AuthorController@index')->name('login.page');
@@ -68,7 +72,17 @@ Route::get('/administrator/provinsi/edit_process', 'App\Http\Controllers\Provins
 Route::get('/administrator/provinsi/destroy/{id}', 'App\Http\Controllers\ProvinsiController@destroy');
 
 Route::get('/administrator/produk/tablelist', 'App\Http\Controllers\ProdukController@getForTable')->name('produk.tablelist');
-Route::prefix('administrator')->group(function () {
+Route::prefix('administrator')->middleware('App\Http\Middleware\IsLoggedInMiddleware')->group(function () {
+
+    // Admin: Banner
+    Route::get('/banner', 'App\Http\Controllers\BannerController@index')->name('banner.list');
+    Route::get('/banner/add', 'App\Http\Controllers\BannerController@create')->name('banner.create');
+    Route::post('/banner/add_process', 'App\Http\Controllers\BannerController@store')->name('banner.store');
+    Route::get('/banner/detail/{id}', 'App\Http\Controllers\BannerController@edit')->name('banner.edit');
+    Route::post('/banner/edit_process/{id}', 'App\Http\Controllers\BannerController@update')->name( 'banner.update');
+    Route::delete('/banner/destroy/{id}', 'App\Http\Controllers\BannerController@destroy')->name('banner.destroy');
+    Route::get('/banner/tablelist', 'App\Http\Controllers\BannerController@getForTable')->name('banner.tablelist');
+
     // Admin: Produk
     Route::resource('produk', 'App\Http\Controllers\ProdukController')->except(['update','destroy']);
     Route::post('/produk/update/{id}', 'App\Http\Controllers\ProdukController@update')->name('produk.update');
@@ -98,9 +112,30 @@ Route::prefix('administrator')->group(function () {
     Route::post('/ukuran/edit_process/{id}', 'App\Http\Controllers\UkuranController@update')->name( 'ukuran.update');
     Route::delete('/ukuran/destroy/{id}', 'App\Http\Controllers\UkuranController@destroy')->name('ukuran.destroy');
     Route::get('/ukuran/tablelist', 'App\Http\Controllers\UkuranController@getForTable')->name('ukuran.tablelist');
-
+    
     // Admin: Gambar
     Route::post('/img/delete/{id}', 'App\Http\Controllers\GambarController@destroy')->name('gambar.destroy');
+
+    //  Admin: Transaksi
+    Route::get('/transaksi/neworder', 'App\Http\Controllers\TransaksiController@neworder')->name('transaksi.neworder');
+    Route::post('/transaksi/update_status/{id}', 'App\Http\Controllers\TransaksiController@update_status')->name('transaksi.update_status');
+    //status baru
+    Route::get('/transaksi/neworder_data', 'App\Http\Controllers\TransaksiController@neworder_data')->name('transaksi.neworder_data');
+    Route::get('/transaksi/getone_data/{id}', 'App\Http\Controllers\TransaksiController@getone_data')->name('transaksi.getone_data');
+    //status dibayar
+    Route::get('/transaksi/dibayar', 'App\Http\Controllers\TransaksiController@dibayar')->name('transaksi.dibayar');
+    Route::get('/transaksi/dibayar_data', 'App\Http\Controllers\TransaksiController@dibayar_data')->name('transaksi.dibayar_data');
+    //status dikemas
+    Route::get('/transaksi/dikemas', 'App\Http\Controllers\TransaksiController@dikemas')->name('transaksi.dikemas');
+    Route::get('/transaksi/dikemas_data', 'App\Http\Controllers\TransaksiController@dikemas_data')->name('transaksi.dikemas_data');
+    //status dikirim
+    Route::get('/transaksi/dikirim', 'App\Http\Controllers\TransaksiController@dikirim')->name('transaksi.dikirim');
+    Route::get('/transaksi/dikirim_data', 'App\Http\Controllers\TransaksiController@dikirim_data')->name('transaksi.dikirim_data');
+    //status selesai
+    Route::get('/transaksi/selesai', 'App\Http\Controllers\TransaksiController@selesai')->name('transaksi.selesai');
+    Route::get('/transaksi/selesai_data', 'App\Http\Controllers\TransaksiController@selesai_data')->name('transaksi.selesai_data');
+    //detele transaksi
+    Route::post('/transaksi/delete/{id}', 'App\Http\Controllers\TransaksiController@destroy')->name('transaksi.destroy');
 });
 
 

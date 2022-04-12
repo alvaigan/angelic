@@ -175,8 +175,7 @@
                             <div class="form-group row">
                                 <label for="deskripsi" class="col-sm-4 col-lg-2 col-form-label">Deskripsi</label>
                                 <div class="col-sm-10">
-                                    <textarea name="deskripsi"
-                                        id="editor">{{ isset($data) ? $data['deskripsi'] : '' }}</textarea>
+                                    <textarea name="deskripsi" id="editor">{{ isset($data) ? $data['deskripsi'] : '' }}</textarea>
                                 </div>
                             </div>
 
@@ -222,7 +221,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         @endforeach
                                     @else
