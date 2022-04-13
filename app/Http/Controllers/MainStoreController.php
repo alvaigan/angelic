@@ -180,7 +180,7 @@ class MainStoreController extends Controller
 Apakah barang2 tersebut ready?";
         $wording = $head .= $footer;
         $trim_tab = str_replace("\t", "", $wording);
-        $final_wording = 'https://wa.me/6281395446682?text=' . urlencode($trim_tab);
+        $final_wording = 'https://wa.me/6287828925046?text=' . urlencode($trim_tab);
         // dd($final_wording);
         return redirect($final_wording);
     }

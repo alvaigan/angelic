@@ -106,7 +106,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransaksi"
             aria-expanded="true" aria-controls="collapseTransaksi">
-            <i class="fas fa-fw fa-mail-bulk"></i>
+            <i class="fas fa-fw fa-money-bill-wave"></i>
             <span>Transaksi</span>
         </a>
         <div id="collapseTransaksi" class="collapse" aria-labelledby="headingTransaksi"
