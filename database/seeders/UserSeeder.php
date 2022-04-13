@@ -21,5 +21,11 @@ class UserSeeder extends Seeder
         $user1->password = Hash::make('@ngel!c', ['rounds' => 10]);
         $user1->role = "admin";
         $user1->save();
+
+        $user2 = new User;
+        $user2->username = "Admin Angelic";
+        $user2->password = Hash::make('@ngel!c', ['rounds' => 10]);
+        $user2->role = "admin";
+        $user2->save();
     }
 }
