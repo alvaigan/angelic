@@ -32,6 +32,8 @@ class AuthorController extends Controller
                 $req->session()->put($session);
                 // dd($req->session()->get('userdata'));
                 return redirect()->route('dashboard');
+            } else {
+                return redirect()->back()->with('error', 'Username atau password salah!');
             }
         } catch (Throwable $err) {
             error_log($err->getMessage());
