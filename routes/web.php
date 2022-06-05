@@ -136,7 +136,21 @@ Route::prefix('administrator')->middleware('App\Http\Middleware\IsLoggedInMiddle
     Route::get('/transaksi/selesai_data', 'App\Http\Controllers\TransaksiController@selesai_data')->name('transaksi.selesai_data');
     //detele transaksi
     Route::post('/transaksi/delete/{id}', 'App\Http\Controllers\TransaksiController@destroy')->name('transaksi.destroy');
+
+
+    Route::prefix('/kupon')->group(function () {
+        // Admin: Kupon
+        Route::get('', 'App\Http\Controllers\KuponController@index')->name('kupon.list');
+        Route::get('/add', 'App\Http\Controllers\KuponController@create')->name('kupon.create');
+        Route::post('/add_process', 'App\Http\Controllers\KuponController@store')->name('kupon.store');
+        Route::get('/detail/{id}', 'App\Http\Controllers\KuponController@edit')->name('kupon.edit');
+        Route::post('/edit_process/{id}', 'App\Http\Controllers\KuponController@update')->name( 'kupon.update');
+        Route::delete('/destroy/{id}', 'App\Http\Controllers\KuponController@destroy')->name('kupon.destroy');
+        Route::get('/tablelist', 'App\Http\Controllers\KuponController@getForTable')->name('kupon.tablelist');
+    });
 });
+
+Route::get('/check_kupon/{kode_kupon}', 'App\Http\Controllers\KuponController@check_kupon')->name('kupon.check_kupon');
 
 
 

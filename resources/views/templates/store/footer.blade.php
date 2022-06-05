@@ -4,10 +4,9 @@
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacts</h6>
                 <ul class="list-unstyled mb-0">
-                    <li><a class="footer-link" href="#">Email</a></li>
-                    <li><a class="footer-link" href="#">Whatsapp</a></li>
-                    <li><a class="footer-link" href="#">Instagram</a></li>
-                    <li><a class="footer-link" href="#">Facebook</a></li>
+                    <li><a class="footer-link" href="mailto:officialdangelic@gmail.com" target="blank">Email</a></li>
+                    <li><a class="footer-link" href="https://instagram.com/angelic_holynpure?igshid=YmMyMTA2M2Y=" target="blank">Instagram</a></li>
+                    <li><a class="footer-link" href="https://api.whatsapp.com/send?phone=6287828925046" target="blank">Whatsapp</a></li>
                 </ul>
             </div>
 

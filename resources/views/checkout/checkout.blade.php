@@ -30,14 +30,30 @@
             <div class="row">
                 <!-- ORDER SUMMARY-->
                 <div class="col-lg-6 mb-5">
-                    <div class="card border-0 rounded-0 p-lg-4 bg-light">
-                        <div class="card-body">
-                            <h5 class="text-uppercase mb-4">Detail Order</h5>
-                            <ul class="list-unstyled mb-0 detail-order">
-                                <li class="d-flex align-items-center justify-content-between"><strong
-                                        class="text-uppercase small fw-bold">Total</strong><span class="total">Rp
-                                        0</span></li>
-                            </ul>
+
+                    <div class="row mb-2">
+                        <div class="col-12 card border-0 rounded-0 p-lg-4 bg-light">
+                            <div class="card-body">
+                                <h5 class="text-uppercase">Coupon</h5>
+                                <small>Dapatkan potongan jika Anda memiliki kode kupon</small>
+                                <div class="form-inline">
+                                    <input class="input-kupon form-control form-control-sm mr-1 col-8" name="kode_kupon" type="text" placeholder="Coupon Code" id="nama_depan">
+                                    <button class="btn btn-sm btn-primary col-3 btn-check-kupon">check</button>
+                                </div>
+                            </div>
+                        </div>  
+                    </div> 
+ 
+                    <div class="row">
+                        <div class="col-12 card border-0 rounded-0 p-lg-4 bg-light">
+                            <div class="card-body">
+                                <h5 class="text-uppercase mb-4">Detail Order</h5>
+                                <ul class="list-unstyled mb-0 detail-order">
+                                    <li class="d-flex align-items-center justify-content-between"><strong
+                                            class="text-uppercase small fw-bold">Total</strong><span class="total">Rp
+                                            0</span></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -109,6 +125,7 @@
 @endsection
 
 @push('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
@@ -159,13 +176,56 @@
                                         class="small fw-bold">${row.nama_produk} (${row.size}) x ${row.qty} </strong><span
                                         class="text-muted small">Rp ${row.sub_total}</span></li>
                                     <li class="border-bottom my-2"></li>`;
-
+ 
                 $('.detail-order').prepend(tagsToAppend);
-            }
-
+            }  
+  
             $('.total').text("Rp " + mappedToCheckout.final_total);
-
+   
             $('.order').val(JSON.stringify(mappedToCheckout));
+        });
+  
+        $('.btn-check-kupon').click(function(e) {
+            e.preventDefault(); 
+            let kode_kupon = $('.input-kupon').val(); 
+
+            $.ajax({
+                url: "{{ url('/check_kupon/') }}/" + kode_kupon,
+                type: "GET",
+                success: function(response) {
+                    if (response.status == false) {
+                        toastr.warning("Kupon tidak tersedia!")
+                    } else {
+                        let isclaim_code = localStorage.getItem('isclaim_code');
+
+                        if (isclaim_code == kode_kupon) {
+                            toastr.warning("Kupon sudah digunakan!")
+                            return false;
+                        }
+
+                        let total = parseInt($('.total').text().replace("Rp ", ""));
+                        let potongan = parseInt(response.data.potongan);
+                        let total_diskon = total - potongan;
+
+                        $('.total').text("Rp " + total_diskon);
+
+                        let mappedToCheckout = localStorage.getItem('mappedToCheckout');
+
+                        mappedToCheckout = JSON.parse(mappedToCheckout);
+                        mappedToCheckout.final_total = total_diskon;
+
+                        localStorage.setItem('mappedToCheckout', JSON.stringify(mappedToCheckout));
+                        localStorage.setItem('isclaim_code', kode_kupon);
+
+                        $('.detail-order').append(`<li class="d-flex align-items-center justify-content-between"><strong
+                                        class="small fw-bold">Potongan</strong><span
+                                        class="text-muted small">- Rp ${potongan}</span></li>
+                                    <li class="border-bottom my-2"></li>`);
+
+                        toastr.success("Berhasil!", "Anda mendapatkan potongan harga sebesar Rp "+ response.data.potongan)
+                    }
+                }
+            });
         });
     </script>
 @endpush

@@ -172,7 +172,7 @@ class MainStoreController extends Controller
             Produk: $produk
             Ukuran: $ukuran
             Jumlah: $jumlah
-            Subtotal: $subtotal
+            Subtotal: Rp $subtotal
             ==========";
         }
 

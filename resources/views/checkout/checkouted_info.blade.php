@@ -6,17 +6,32 @@
             <div class="jumbotron">
 
                 <h1 class="display-5">Checkout Anda Berhasil!</h1>
-                <p class="lead">Halo {{ isset($data) ? $data->nama_lengkap : '' }} Anda telah berhasil melakukan
+                <p class="lead mb-0">Halo <b>{{ isset($data) ? $data->nama_lengkap : '' }} </b>, Anda telah berhasil melakukan
                     pemesanan! </p>
-                <p class="lead">Selanjutnya lakukan pembayaran melalui nomor rekening berikut : </p>
+                <p class="lead">Selanjutnya dapat melakukan pembayaran melalui salah satu nomor rekening berikut : </p>
                 <div class="mb-4 row col-12">
-                    <img class="col-md-1" src="{{ asset('public/assets') }}/img/credit-card.png">
-                    <h4 class="mr-auto mt-auto mb-auto">0012 345 678 910 | BCA | a/n Anwar Sanusi</h4>
+                    <img class="col-md-1 col-6" src="{{ asset('public/assets') }}/img/credit-card.png">
+                    <h4 class="mr-auto mt-auto mb-auto">131 00 0648331 9 | Mandiri | a/n Dani Permana</h4>
+                </div>
+
+                <div class="mb-4 row col-12">
+                    <img class="col-md-1 col-6" src="{{ asset('public/assets') }}/img/credit-card.png">
+                    <h4 class="mr-auto mt-auto mb-auto">148 04 74658 | BCA | a/n Dani Permana</h4>
+                </div>
+
+                <div class="mb-4 row col-12">
+                    <img class="col-md-1 col-6" src="{{ asset('public/assets') }}/img/credit-card.png">
+                    <h4 class="mr-auto mt-auto mb-auto">0286 01 046541 50 1 | BRI | a/n Dani Permana</h4>
+                </div>
+
+                <div class="mb-4 row col-12">
+                    <img class="col-md-1 col-6" src="{{ asset('public/assets') }}/img/credit-card.png">
+                    <h4 class="mr-auto mt-auto mb-auto">081395446682 | OVO | a/n Dani Permana</h4>
                 </div>
 
                 <hr class="my-4">
                 <p>
-                    Untuk verifikasi kode pemesanan dan informasi lainnya, hubungi kami melalui Whatsapp.
+                    Untuk konfirmasi kode pemesanan dan informasi lainnya, hubungi kami melalui Whatsapp.
                 </p>
                 <a class="btn-direct btn btn-primary" href="{{ route('direct_whatsapp', isset($data) ? $data->id : '') }}"
                     role="button">Lanjut ke Whatsapp</a>

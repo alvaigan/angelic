@@ -15,7 +15,7 @@ class TransaksiController extends Controller
 
     public function neworder_data()
     {
-        $call_transaksi = Transaksi::where('status', 'baru')->get();
+        $call_transaksi = Transaksi::where('status', 'baru')->orderBy('created_at', 'DESC')->get();
         $data = [];
         foreach ($call_transaksi as $key => $item) {
             $tanggal = date('d-m-Y H:i:s', strtotime($item->created_at));
@@ -53,7 +53,7 @@ class TransaksiController extends Controller
 
     public function dibayar_data()
     {
-        $call_transaksi = Transaksi::where('status', 'dibayar')->get();
+        $call_transaksi = Transaksi::where('status', 'dibayar')->orderBy('created_at', 'DESC')->get();
         $data = [];
         foreach ($call_transaksi as $key => $item) {
             $tanggal = date('d-m-Y H:i:s', strtotime($item->created_at));
@@ -91,7 +91,7 @@ class TransaksiController extends Controller
 
     public function dikemas_data()
     {
-        $call_transaksi = Transaksi::where('status', 'dikemas')->get();
+        $call_transaksi = Transaksi::where('status', 'dikemas')->orderBy('created_at', 'DESC')->get();
         $data = [];
         foreach ($call_transaksi as $key => $item) {
             $tanggal = date('d-m-Y H:i:s', strtotime($item->created_at));
@@ -129,7 +129,7 @@ class TransaksiController extends Controller
 
     public function dikirim_data()
     {
-        $call_transaksi = Transaksi::where('status', 'dikirim')->get();
+        $call_transaksi = Transaksi::where('status', 'dikirim')->orderBy('created_at', 'DESC')->get();
         $data = [];
         foreach ($call_transaksi as $key => $item) {
             $tanggal = date('d-m-Y H:i:s', strtotime($item->created_at));
@@ -167,7 +167,7 @@ class TransaksiController extends Controller
 
     public function selesai_data()
     {
-        $call_transaksi = Transaksi::where('status', 'selesai')->get();
+        $call_transaksi = Transaksi::where('status', 'selesai')->orderBy('created_at', 'DESC')->get();
         $data = [];
         foreach ($call_transaksi as $key => $item) {
             $tanggal = date('d-m-Y H:i:s', strtotime($item->created_at));

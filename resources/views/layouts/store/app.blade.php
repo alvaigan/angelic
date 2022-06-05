@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <meta name="facebook-domain-verification" content="sytq25ez40y87l13wgykn2k6vbry35" />
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{{ asset('public/assets/store') }}/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Lightbox-->
@@ -38,6 +39,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 
     <!-- Facebook Pixel Code -->
+    <!-- Meta Pixel Code -->
     <script>
         ! function(f, b, e, v, n, t, s) {
             if (f.fbq) return;
@@ -57,9 +59,12 @@
             s.parentNode.insertBefore(t, s)
         }(window, document, 'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '359614955964158');
+        fbq('init', '716807922693667');
         fbq('track', 'PageView');
     </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=716807922693667&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=359614955964158&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->

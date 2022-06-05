@@ -78,6 +78,13 @@
             <i class="fas fa-fw fa-archive"></i>
             <span>Data Ukuran</span></a>
     </li>
+    
+    <!-- Nav Item - Data Kupon -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('kupon.list') }}">
+            <i class="fas fa-fw fa-archive"></i>
+            <span>Data Kupon</span></a>
+    </li>
 
     <!-- Nav Item - Konten Collapse Menu -->
     <li class="nav-item">
